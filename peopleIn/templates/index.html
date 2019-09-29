@@ -1,0 +1,125 @@
+{% extends "home_base.html" %}                   <!--base.html을 상속받는다고 선언-->
+
+{% block title %}{% endblock %}    <!--title 블록 재정의-->
+
+<!--정적 파일인 css 연결하기 위하여, staticfiles를 로드-->
+{% load staticfiles %}
+<!--extrastyle 블록을 재정의하여 추가적으로 home.css 연결-->
+{% block extrastyle %}{% static "home.css" %}{% endblock %}
+
+{% block content %}
+
+      <!-- JavaScript files-->
+    <script src="https://cdn.linearicons.com/free/1.0.0/svgembedder.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<body>
+
+
+<div id="fullpage">
+	<div class="section" id="section0">
+		<h1>파티피플인<br />ex ea commodo</h1>
+	</div><!-- /.section0끝 -->
+	<div class="section" id="section1">
+			<div class="intro">
+				<h1 style="color:white;">NEW</h1>
+				<p>아직 못본 더 많은 상가가 있어요.</p>
+			</div>
+        <br>
+
+    <section>
+  <div class="container">
+    <h2>forSale</h2>
+    <p class="lead text-muted mb-5"></p>
+    <div class="row">
+    {% for item in item_list %}
+      <div class="col-md-4 mb-4">
+        <div class="card shadow border-0 h-100"><a href="{{ item.get_absolute_url }}"><img src="{{ item.photo.url }}" alt="" class="card-img-top"></a>
+          <div class="card-body">
+            <a class="text-dark" href="{{ item.get_absolute_url }}">{{ item.name }} </a></br>
+              <h3><a class="text-dark">{{ item.price }}</a></h3>
+{#            <p class="text-muted card-text">{{ post.p }}</p>#}
+{#            <p class="card-text"><a href="{{ post.get_absolute_url }}">더 읽기</a></p>#}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+	</div><!-- /.section1끝 -->
+	<div class="section section2" id="section2">
+		<div class="inner">
+			<h2 class="sTit ">투자 전 확인하세요!</h2><br>
+				<em>투자는 철저한 사전조사와 계획이 필요합니다.<br>피플IN에서 알려드립니다!</em>
+			<div class="investCheck d-flex justify-content-center">
+				<a class="menu1" title="기업철학 페이지 이동">
+					<strong>내 자산 투자,<br>믿고 맡길 수 있을까? <span>기업철학</span></strong>
+					<img src="/static/img/invest1.png" alt="">
+				</a>
+				<a class="menu2" title="위험관리체계 페이지 이동">
+					<strong>내 자산 투자,<br>위험할 때도 괜찮을까? <span>위험관리체계</span></strong>
+					<img src="/static/img/invest2.png" alt="">
+				</a>
+			</div>
+		</div>
+	</div><!-- /.section2끝 -->
+	<div class="section" id="section3">
+		<div class="intro">
+			<h1 style="color:white;">FRANCHISE</h1>
+			<p>프렌차이즈 별 데이터 정보를 살펴보세요</p>
+		</div>
+		<div class="list_wrap">
+		  <ul>
+			<li class="list"><img src="/static/img/franlogo1.png" alt="쥬씨""></li>
+			<li class="list"><img src="/static/img/franlogo3.png"></li>
+			<li class="list"><img src="/static/img/franlogo5.png"></li>
+			<li class="list"><img src="/static/img/franlogo2.png"></li>
+			<li class="list"><img src="/static/img/franlogo7.png"></li>
+			<li class="list"><img src="/static/img/franlogo2.png"></li>
+			<li class="list"><img src="/static/img/franlogo18.png"></li>
+			<li class="list"><img src="/static/img/franlogo19.png"></li>
+			<li class="list"><img src="/static/img/franlogo18.png"></li>
+			<li class="list"><img src="/static/img/franlogo13.png"></li>
+			<li class="list"><img src="/static/img/franlogo7.png"></li>
+			<li class="list"><img src="/static/img/franlogo5.png"></li>
+		</ul>
+		</div>
+
+    </div><!-- /.section3끝 -->
+
+</div><!--fullpage 끝-->
+
+<script type="text/javascript" src="{% static 'js/fullpage.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/example.js' %}"></script>
+
+<script type="text/javascript">
+    var myFullpage = new fullpage('#fullpage', {
+        verticalCentered: false,
+		sectionsColor: ['#1bbc9b', '#7BAABE', '#eeeeee' ],
+        //to avoid problems with css3 transforms and fixed elements in Chrome, as detailed here: https://github.com/alvarotrigo/fullPage.js/issues/208
+        css3:false
+    });
+</script>
+
+{% endblock %}
+
+
+
+{% block footer %}
+
+<div class="footer2">
+
+</div>
+
+{% endblock footer %}
+
+      <!-- JavaScript files-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.linearicons.com/free/1.0.0/svgembedder.min.js"></script>
+</body>

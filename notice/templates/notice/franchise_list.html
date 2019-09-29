@@ -1,0 +1,96 @@
+{% extends "../base.html" %}                   <!--base.html을 상속받는다고 선언-->
+{% block title %}프랜차이즈{% endblock %}
+{% load staticfiles %}
+{% block extrastyle %}{% static "notice.css" %}{% endblock %}
+{% block content %}
+
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+  <div style="height:150px;"></div>
+
+
+<div class="board_header">
+
+		<span class="favorite_button favorites_24761 active" onclick="location.href='{% url 'notice:notice_list' %}'">
+{#            <i class="fas"></i></span>#}
+        <a class="a_header" href="{% url 'notice:franchise_list' %}">
+            <span class="notice_title">프랜차이즈</span>
+        </a>
+      </span>
+<hr class="my-hr3">
+</div>
+
+{#ㄴㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ#}
+
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<table id="datatable">
+    <thead>
+        <tr>
+            <th></th>
+            <th>2018년 상반기</th>
+            <th>2018년 하반기</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>한식</th>
+            <td>3533</td>
+            <td>3880</td>
+        </tr>
+        <tr>
+            <th>양식</th>
+            <td>4258</td>
+            <td>4302</td>
+        </tr>
+        <tr>
+            <th>닭</th>
+            <td>3864</td>
+            <td>3946</td>
+        </tr>
+        <tr>
+            <th>패스트푸드</th>
+            <td>3917</td>
+            <td>4412</td>
+        </tr>
+        <tr>
+            <th>일식</th>
+            <td>3943</td>
+            <td>4163</td>
+        </tr>
+    </tbody>
+</table>
+<body>
+<script type="text/javascript">
+
+Highcharts.chart('container', {
+    data: {
+        table: 'datatable'
+    },
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: '서울 성동구 음식 업종별 매출통계'
+    },
+    yAxis: {
+        allowDecimals: false,
+        title: {
+            text: '월평균매출액 : 만원'
+        }
+    },
+    tooltip: {
+        formatter: function () {
+            return '<b>' + this.series.name + '</b><br/>' +
+                this.point.y + '만원';
+        }
+    }
+});
+</script>
+{#ㄴㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ#}
+
+{% endblock %}

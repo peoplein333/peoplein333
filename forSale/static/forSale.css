@@ -1,0 +1,12 @@
+.noticeClass {
+    margin: 0 auto;
+}
+
+.noticeEditor {
+    text-align: center;
+}
+
+#id_title {
+    opacity: 0.8;
+    width: 837px;
+}

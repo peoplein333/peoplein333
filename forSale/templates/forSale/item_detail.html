@@ -1,0 +1,92 @@
+{% extends "../base.html" %}                   <!--base.html을 상속받는다고 선언-->
+{% block title %}{{ notice.title }}{% endblock %}
+{% load staticfiles %}
+{% block extrastyle %}{% static "bootstrap/css/bootstrap.css" %}{% endblock %}
+
+
+{% load humanize %}
+
+{% block content %}
+    {{ block.super }}
+
+    <div style="height:150px;"></div>
+
+    <div class="board_header">
+
+        <span class="favorite_button favorites_24761 active" onclick="location.href='{% url 'forSale:item_list' %}'">
+    {#            <i class="fas"></i></span>#}
+        <a class="a_header" href="{% url 'forSale:item_list' %}">
+            <span class="notice_title">매물 정보</span>
+        </a>
+      </span>
+    <hr class="my-hr3">
+    </div>
+
+{## 매물 정보#}
+
+    <section style="height:1000px;">
+        <article>
+            <div class="title-wrap clearfix" style="padding-left:200px; height:auto;">
+                <h1> <span style="">{{ item.name }}</span></h1>
+                <h3> <span style="">{{ item.price|intcomma }}</span></h3>
+                <div class="under-title" style="font-size: 15px;">
+                </div>
+            </div>
+        </article>
+    <hr class="my-hr4">
+
+  <div class="notice_content">
+        <article itemprop="articleBody"><!--BeforeDocument(1102807111,0)-->
+
+        <div>
+            {% if item.photo %}
+                <img src="{{ item.photo.url }}" style="max-width:800px; height:500px;">
+            {% endif %}
+        <br><br>
+        {{ item.desc|safe  }}
+        <br><br>
+
+        <div class="control hidden">
+            {% if request.user.is_superuser %}
+                <button type="submit" class="">
+                    <a href="{% url 'forSale:item_remove' item.pk %}" style="color:#fff">매물정보 삭제</a>
+                </button>
+                <div class="control hidden">
+                <button type="submit" class="">
+                    <a href="{% url 'forSale:item_edit' item.pk %}" style="color:#fff">매물정보 수정</a>
+                </button>
+            {% endif %}
+        </div>
+        </article>
+  </div>
+
+
+  </section>
+
+
+
+{#    ##########################################}
+
+
+{#<h3>Reviews</h3>#}
+{##}
+{#<table>#}
+{#    <thead>#}
+{#        <th>id</th>#}
+{#        <th>댓글</th>#}
+{#        <th>작성 일시</th>#}
+{#        <th>수정 일시</th>#}
+{#    </thead>#}
+{#    <tbody>#}
+{#    {% for r in item.reviews.all %}#}
+{#        <tr>#}
+{#            <td>{{ r.id }}</td>#}
+{#            <td>{{ r.message }}</td>#}
+{#            <td>{{ r.created_at }}</td>#}
+{#            <td>{{ r.updated }}</td>#}
+{#        </tr>#}
+{#    {% endfor %}#}
+{#    </tbody>#}
+{#</table>#}
+
+{% endblock content %}

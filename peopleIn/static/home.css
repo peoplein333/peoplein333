@@ -1,0 +1,14 @@
+  .welcome {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: right;
+      /*padding-right: 10px;*/
+
+      color: #ffffff;
+      font-weight: normal;
+      font-size: 12px;
+  }
+
+  .welcome a:link, .welcome a:visited {
+      color: #FFFFFF;
+  }

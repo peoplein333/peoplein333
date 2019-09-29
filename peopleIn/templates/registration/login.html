@@ -1,0 +1,46 @@
+{% extends "register_base2.html" %}
+{% block title %}로그인{% endblock %}
+{% load staticfiles %}
+{% block extrastyle %}{% static 'forms.css' %}{% endblock %}
+
+{% block content %}
+
+  <br>  <br>
+
+
+<span id="content" >
+{# <h1 class="h3 mb-3 font-weight-normal">로그인</h1>#}
+  <form class="form-signin" action="." method="post">{% csrf_token %} <!-- {% csrf_token %} 해킹을 막음 -->
+      {% if form.errors %}
+        <p class="errornote">아이디 또는 비밀번호를 다시 확인하세요.</p><br>
+{#      {% elif user.is_anonymous %}#}
+{#        <p class="errornote">접근 권한이 없습니다.</p><br>#}
+      {% endif %}
+{#      <p>아이디와 비밀번호를 알려 주세요.</p>#}
+  <div class="loginform">
+      <a href="{% url 'index' %}"><img class="logologin" src="{% static '4.png' %}"></a>
+      <div class="loginformgroup">
+          <div class="form-group">
+              <input type="text" class="form-control" name="username" placeholder="Username" required="required">
+          </div>
+          <div class="form-group">
+              <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+          </div>
+          <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-lg btn-block login-btn">로그인</button>
+          </div>
+          <div>
+              <hr/>
+              <span class="exfun">아이디찾기</span>|&nbsp;<span class="exfun">비밀번호찾기 </span>&nbsp;|
+              <a href="{% url 'register' %}"><span class="exfun2">회원가입</span></a>&nbsp;&nbsp;&nbsp;
+          </div>
+      </div>
+
+  </div>
+    <!-- 자바스크립트 활용 -->
+    <script type="text/javascript">document.getElementById('id_username').focus();</script>
+
+  </form>
+
+</span>
+{% endblock %}
