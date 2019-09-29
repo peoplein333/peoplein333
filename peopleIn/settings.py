@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'userExtends',
     'forSale',
     'django.contrib.humanize',
+    'sang',
 
 
 ]

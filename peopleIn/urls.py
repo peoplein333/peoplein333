@@ -19,7 +19,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls, name='admin'),
     path('', views.IndexView.as_view(), name='index'),
     path('notice/', include('notice.urls')),
-    path('franchise/', include('notice.urls')),
+    path('sang/', include('sang.urls')),
     path('map/', include('map.urls')),
     path('forSale/', include('forSale.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
