@@ -1,0 +1,54 @@
+{% extends "../base.html" %}                   <!--base.html을 상속받는다고 선언-->
+{% block title %}프랜차이즈{% endblock %}
+{% load staticfiles %}
+{% block extrastyle %}{% static "franchise.css" %}{% endblock %}
+{% block content %}
+<style>
+.chart .list-wrap .cont.gallery > ul > li .title {
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 15px;
+    color: #FFFFFF;
+    font-weight: normal;
+    padding: 0 10px;
+}
+</style>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+  <div style="height:150px;"></div>
+{#<div class="headerimg"></div>#}
+
+<div class="board_header">
+
+		<span class="favorite_button favorites_24761 active" onclick="location.href='{% url 'franchise:franchise_list' %}'">
+            <i class="fas"></i></span>
+        <a class="a_header" href="{% url 'franchise:franchise_list' %}">
+            <span class="notice_title">프랜차이즈</span>
+        </a>
+      </span>
+<hr class="my-hr3">
+</div>
+<div style="height:30px;"></div>
+<div class="fran_list">
+			<a class="fran_a" href="{% url 'franchise:juicy' %}"><img src="/static/img/쥬씨.png" alt="쥬씨"></a>
+			<a class="fran_a" href="{% url 'franchise:gongcha' %}"><img src="/static/img/공차.png"></a>
+			<a class="fran_a" href="{% url 'franchise:subway' %}"><img src="/static/img/서브웨이.png"></a>
+			<a class="fran_a" href="{% url 'franchise:starbucks' %}"><img src="/static/img/스타벅스.png"></a>
+			<a class="fran_a" href="{% url 'franchise:momstouch' %}"><img src="/static/img/맘스터치.png"></a>
+      <a class="fran_a" href="{% url 'franchise:ediya' %}"><img src="/static/img/이디야.png"></a>
+      <a class="fran_a" href="{% url 'franchise:sinjeon' %}"><img src="/static/img/신전.png"></a>
+      <a class="fran_a" href="{% url 'franchise:caffebene' %}"><img src="/static/img/카페베네.png"></a>
+      <a class="fran_a" href="{% url 'franchise:mrsd' %}"><img src="/static/img/명랑핫도그.png"></a>
+{#      <a class="fran_a" href="{% url 'franchise:momstouch' %}"><img src="/static/img/명랑핫도그.png"></a>#}
+
+</div>
+
+{% endblock %}

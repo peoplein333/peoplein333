@@ -44,10 +44,12 @@ INSTALLED_APPS = [
     'notice',
     'userExtends',
     'forSale',
-    'django.contrib.humanize',
     'sang',
-
-
+    'django.contrib.humanize',
+    'import_export',
+    'ticket',
+    'chartit',
+    'franchise.apps.FranchiseConfig',
 ]
 
 CKEDITOR_UPLOAD_PATH = "uploads/"

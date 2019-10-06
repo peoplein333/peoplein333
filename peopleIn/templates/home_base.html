@@ -75,10 +75,13 @@
           </li>
           {% endif %}
           <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="{% url 'ticket:ticket_index' %}">이용권 구매</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="{% url 'sang:sang2' %}">상권분석</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="{% url 'notice:franchise_list' %}">프랜차이즈</a>
+            <a class="nav-link js-scroll-trigger" href="{% url 'franchise:franchise_list' %}">프랜차이즈</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="{% url 'forSale:item_list' %}">상가매물</a>

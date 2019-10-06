@@ -1,0 +1,24 @@
+/*.headerimg {*/
+/*    max-width:100%;*/
+/*    height:500px;*/
+/*    background-image: url("주방.jpg");*/
+/*}*/
+
+/*#mainNav{*/
+/*  background-color: transparent;*/
+/*    color: #ffffff*/
+/*}*/
+
+.fran_list{
+    margin-left: 230px;
+    margin-right: 230px;
+
+}
+
+.fran_a img{
+    width: 200px;
+}
+
+.fran_a:hover {
+    filter: brightness(40%);
+}

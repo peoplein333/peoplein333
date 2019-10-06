@@ -19,6 +19,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls, name='admin'),
     path('', views.IndexView.as_view(), name='index'),
     path('notice/', include('notice.urls')),
+    path('franchise/', include('franchise.urls')),
+    path('ticket/', include('ticket.urls')),
     path('sang/', include('sang.urls')),
     path('map/', include('map.urls')),
     path('forSale/', include('forSale.urls')),

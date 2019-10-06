@@ -1,0 +1,64 @@
+{% extends "../base.html" %}                   <!--base.html을 상속받는다고 선언-->
+{% block title %}{{ ticket.title }}{% endblock %}
+{% load staticfiles %}
+{% block extrastyle %}{% static "notice.css" %}{% endblock %}
+{% block content %}
+
+  <div style="height:150px;"></div>
+
+<div class="board_header">
+
+      <span class="favorite_button favorites_24761 active" onclick="location.href='{% url 'ticket:ticket_index' %}'">
+{#            <i class="fas"></i></span>#}
+        <a class="a_header" href="{% url 'ticket:ticket_index' %}">
+            <span class="notice_title">이용권 구매</span>
+        </a>
+      </span>
+<hr class="my-hr3">
+</div>
+
+
+
+
+
+{##}
+{#    <br>#}
+{#    <br>#}
+{##}
+{#<div style="margin-left: 15px;">#}
+{#    {{ total_likes }}명이 좋아합니다.#}
+{##}
+{#    {% if request.user.is_authenticated %}#}
+{#    <form action="{% url 'notice:like_notice' %}" method="post">#}
+{#        {% csrf_token %}#}
+{#        {% if is_liked %}#}
+{#            <button type="submit" name="notice_id" value="{{ notice.id }}" class="btn btn-danger">좋아요 취소#}
+{#            </button>#}
+{#        {% else %}#}
+{#            <button type="submit" name="notice_id" value="{{ notice.id }}" class="btn btn-primary">좋아요#}
+{#            </button>#}
+{#        {% endif %}#}
+{#    </form>#}
+{#    {% endif %}#}
+{#</div>#}
+{#<br>#}
+{#    <br>#}
+{#    <h4>댓글</h4>#}
+{#<table>#}
+{##}
+{#        <tbody>#}
+{#        {% for c in notice.comments.all %}#}
+{#            <tr>#}
+{#                <td>{{ c.id }}</td>#}
+{#                <td>{{ c.message }}</td>#}
+{#                <td>{{ c.created_at|date:"h:s" }}</td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
+{#    <br>#}
+{#        <textarea class="inputwriter" placeholder="댓글을 입력해주세요."  name="post"></textarea>#}
+{#        <button type="submit" class="btn btn-primary" style="margin-top: 5px; width: 60px">등록</button>#}
+
+
+{% endblock %}

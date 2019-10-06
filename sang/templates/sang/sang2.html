@@ -1,880 +1,145 @@
+{% extends "base.html" %}                   <!--base.html을 상속받는다고 선언-->
 
+{% block title %}{% endblock %}    <!--title 블록 재정의-->
+
+<!--정적 파일인 css 연결하기 위하여, staticfiles를 로드-->
+{% load staticfiles %}
+<!--extrastyle 블록을 재정의하여 추가적으로 home.css 연결-->
+{% block extrastyle %}{% static "home.css" %}{% endblock %}
+
+{% block content %}
 
 {% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>임시 지역검색</title>
+	<meta charset="utf-8"/>
+	<title>상권분석</title>
 
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <link href='{% static "css/layout.css" %}' rel="stylesheet">
-        <link href='{% static "css/style.css" %}' rel="stylesheet">
-        <link href='{% static "css/font-awesome.min.css" %}' rel="stylesheet">
-        
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <![endif]-->
-    
-        <!-- Favicons -->
-        <link rel="apple-touch-icon-precomposed" href="./assets/ico/apple-touch-icon-precomposed.png">
-        <link rel="icon" href="./assets/ico/favicon.ico">
-    
-        <script async="" src="//www.google-analytics.com/analytics.js"></script><script type="text/javascript">
-        //구글통계
-        try {
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    
-            
-                ga('create', 'UA-46261730-1', 'kmdc.or.kr');
-                //ga('send', 'pageview');		
-        } catch (e) {
-            // TODO: handle exception
-        } 
-            
-        if( window.console == undefined ){ console = { log : function(){} }; }
-        </script>
-
-        <!-- 고도화 사업 ui 개선 -->
-        <script type="text/javascript" src="{% static 'js/default.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/tabs.js' %}"></script>
-        <!-- 고도화 사업 ui 개선 -->
-    
-        <script type="text/javascript">rMateChartH5.defaultColors = ["#618ffc", "#adc900", "#feb400", "#f2685e", "#fe8dfe" ,"#fbbe91","#0000aa","#ffff59","#c400c4"] ;</script>
-    <style type="text/css">
-    #myProgress {
-        width: 100%;
-        background-color: #F5F5F5;
-    }
-    
-    #myBar {
-        width: 0%;
-        height: 30px;
-        background-color: #4CAF50;
-        text-align: center;
-        line-height: 30px;
-        color: white;   
-    }
-    </style>    
-
-    </head>
+</head>
 <body>
-<div class="map-wrap">
-    <div class="side-select-area">
-        <!-- 1단계 지역선택-->
-        <h3><strong>[1단계]</strong> 지역선택</h3>
-        
-        <div class="space-search">    
-            <!-- 주소입력 -->
-            <div class="tab-pane" id="address3">
-                  <label class="control radio">
-                      <input type="radio" class="add-contrast ng-pristine ng-valid" data-ng-model="searchAddrType" id="searchAddrTypeDong" value="dong" alt="행정동" data-role="collar" checked="true" name="004">
-                      <span class="control-indicator"></span>지번
-                   </label>
-                  <label class="control radio">
-                      <input type="radio" class="add-contrast ng-pristine ng-valid" data-ng-model="searchAddrType" id="searchAddrTypeRoad" value="road" alt="도로명" data-role="collar" name="005">
-                      <span class="control-indicator"></span>도로명
-                   </label>
-                <div class="input-group"><!-- 주소입력박스 -->
-                    <label for="AddressDepth2" class="sr-only">주소, 상권, 상호</label>
-                    <input type="text" id="inputAddr" data-ng-model="inputAddr" class="form-control ng-valid ng-dirty" placeholder="주소, 상권, 상호">
-                    <span class="input-group-btn">
-                        <a class="btn btn-search" href="javascript:void(0)" data-ng-click="inputAddrSearch(1)" title="주소,상호,상권 검색 버튼"><img src="/static/img/ico-search.png" alt="검색"></a>
-                    </span>
-                </div>  <!-- /주소입력박스 -->
-                
-                <!-- 검색결과 리스트 -->
-                <div class="layerwrap">
-                    <div id="LayerPopAddressSearch" class="layer-pop-address-search" style="display: none;">
-                        <!-- 탭(1차) -->
-                        <ul class="nav nav-tabs depth-5 nav-justified" id="schTopTabUl" role="tablist">
-                            <li class="active"><a href="#tab1" id="allTab" role="tab" data-toggle="tab">전체</a></li>
-                            <li class=""><a href="#tab2" id="addrTab" role="tab" data-toggle="tab">주소</a></li>
-                            <li class=""><a href="#tab3" id="majorTab" role="tab" data-toggle="tab">상권</a></li>
-                            <li><a href="#tab4" id="storeTab" role="tab" data-toggle="tab">상호</a></li>
-                        </ul><!-- 탭(1차) -->
-                        
-                        <div class="tab-content">                        
-                            <div class="tab-pane active" id="allTabList" style="display: block;">
-                                <ul class="search-list" id="allAddrList"></ul>
-                                <ul class="search-list" id="allMajorList"></ul>
-                                <ul class="search-list" id="allStoreList"></ul>
-                            </div>
-                                
-                            <!-- 주소 탭 리스트 -->
-                            <div class="tab-pane" id="addrTabList" style="display: none;"></div>     
-                             
-                            <!-- 상권 탭 리스트 -->
-                            <div class="tab-pane" id="majorTabList" style="display: none;"><h4 class="ng-scope"><strong>상권</strong> (<span class="point">41건</span>)</h4>
-<ul class="search-list ng-scope">
-
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('40034', 'search')"><span class="blue">강남골목시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('40101', 'search')"><span class="blue">관악신사시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('40102', 'search')"><span class="blue">관악종합시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('20259', 'search')"><span class="blue">낙성대</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('40201', 'search')"><span class="blue">낙성대시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('20264', 'search')"><span class="blue">남태령</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('9333', 'search')"><span class="blue">대학동</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('40475', 'search')"><span class="blue">미성동도깨비시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('40547', 'search')"><span class="blue">봉일시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('20348', 'search')"><span class="blue">봉천</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('40549', 'search')"><span class="blue">봉천제일종합시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('40550', 'search')"><span class="blue">봉천중앙시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('40551', 'search')"><span class="blue">봉천현대시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('9334', 'search')"><span class="blue">사당역_1</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('41548', 'search')"><span class="blue">삼성동시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('1766', 'search')"><span class="blue">서울 관악구 대학동_1</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('1778', 'search')"><span class="blue">서울 관악구 사당역</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('1801', 'search')"><span class="blue">서울 관악구 서울대입구역_1</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('1812', 'search')"><span class="blue">서울 관악구 서울대입구역_2</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('1819', 'search')"><span class="blue">서울 관악구 신림역_1</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('1823', 'search')"><span class="blue">서울 관악구 신림역_2</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('1846', 'search')"><span class="blue">서울 관악구 신림역_3</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('1856', 'search')"><span class="blue">서울 관악구 신림역_4</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('20374', 'search')"><span class="blue">서울대입구</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('9336', 'search')"><span class="blue">서울대입구역_1</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('9337', 'search')"><span class="blue">서울대입구역_2</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('9372', 'search')"><span class="blue">서울대입구역_3</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('41552', 'search')"><span class="blue">서원동상점가</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('20417', 'search')"><span class="blue">신림</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('9338', 'search')"><span class="blue">신림역_1</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('9339', 'search')"><span class="blue">신림역_2</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('9340', 'search')"><span class="blue">신림역_3</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('9341', 'search')"><span class="blue">신림역_4</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('40808', 'search')"><span class="blue">신림종합시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('40809', 'search')"><span class="blue">신림현대종합상가</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('40820', 'search')"><span class="blue">신신림시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('40826', 'search')"><span class="blue">신원시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('41051', 'search')"><span class="blue">우림시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('41130', 'search')"><span class="blue">인헌시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('41250', 'search')"><span class="blue">중부시장</span></a>
-
-
-</li>
-
-<li>
-
-<a href="javascript:void(0)" data-ng-click="majorDrawChoose('41385', 'search')"><span class="blue">펭귄시장</span></a>
-
-
-</li>
-
-
-
-</ul></div> 
-                                                        
-                            <!-- 상호 탭 리스트 -->
-                            <div class="tab-pane" id="storeTabList" style="display: none;"></div> 
-                            
-                        </div>
-                        <div class="layer-pop-search-footer">
-                            <a href="javascript:void(0);" id="searchListHide" class="btn btn-secondary btm-btn btn-lg">선택완료</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- 검색결과 리스트 -->
-            </div>
-        </div>
+  <div style="height:150px;"></div>
+  <div class="board_header">
+
+		<span class="favorite_button favorites_24761 active" onclick="location.href='{% url 'sang:sang2' %}'">
+{#            <i class="fas"></i></span>#}
+        <a class="a_header" href="{% url 'sang:sang2' %}">
+            <span class="notice_title">상권분석</span>
+        </a>
+      </span>
+<hr class="my-hr3">
+</div>
+	<div id="map" style=" height:350px; margin-right:180px; margin-left:180px;"></div>
+
+	<script src="https://code.jquery.com/jquery-latest.min.js" type="application/javascript"></script>
+
+    <script src="{% static 'js/hangjungdong2.js' %}" type="application/javascript"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2efc7c37bb5224fa7e38f9b7f3a8bc32&libraries=services,clusterer,drawing"></script>
+
+	<script>
+		
+
+		jQuery(document).ready(function(){
+  //sido option 추가
+  jQuery.each(hangjungdong.sido, function(idx, code){
+    //append를 이용하여 option 하위에 붙여넣음
+    jQuery('#sido').append(fn_option(code.sido, code.codeNm));
+  });
+
+  //sido 변경시 시군구 option 추가
+  jQuery('#sido').change(function(){
+    jQuery('#sigugun').show();
+    jQuery('#sigugun').empty();
+    jQuery('#sigugun').append(fn_option('','선택')); //
+    jQuery.each(hangjungdong.sigugun, function(idx, code){
+      if(jQuery('#sido > option:selected').val() == code.sido)
+        jQuery('#sigugun').append(fn_option(code.sigugun, code.codeNm));
+    });
+
+    //세종특별자치시 예외처리
+    //옵션값을 읽어 비교
+    if(jQuery('#sido option:selected').val() == '36'){
+      jQuery('#sigugun').hide();
+      //index를 이용해서 selected 속성(attr)추가
+      //기본 선택 옵션이 최상위로 index 0을 가짐
+      jQuery('#sigugun option:eq(1)').attr('selected', 'selected');
+      //trigger를 이용해 change 실행
+      jQuery('#sigugun').trigger('change');
+    }
+  });
+
+  //시군구 변경시 행정동 옵션추가
+  jQuery('#sigugun').change(function(){
+    //option 제거
+    jQuery('#dong').empty();
+    jQuery.each(hangjungdong.dong, function(idx, code){
+      if(jQuery('#sido > option:selected').val() == code.sido && jQuery('#sigugun > option:selected').val() == code.sigugun)
+        jQuery('#dong').append(fn_option(code.dong, code.codeNm));
+    });
+    //option의 맨앞에 추가
+    jQuery('#dong').prepend(fn_option('','선택'));
+    //option중 선택을 기본으로 선택
+    jQuery('#dong option:eq("")').attr('selected', 'selected');
+
+  });
+
+  jQuery('#dong').change(function(){
+    var sido = jQuery('#sido option:selected').val();
+    var sigugun = jQuery('#sigugun option:selected').val();
+    var dong = jQuery('#dong option:selected').val();
+    var codeNm = jQuery('#dong option:selected').text();
+    // var ADONG_NM = sido + sigugun + dong + '00';
+
+
+    // 한글 -> 좌표 변환
+    var geocoder = new kakao.maps.services.Geocoder();
+
+    var callback = function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+            var x = result[0].address.x;
+            var y = result[0].address.y;
+            console.log(x,y);
+            var container = document.getElementById('map');
+            var options = {
+              center: new kakao.maps.LatLng(y,x),
+              level: 3
+            };
+
+            var map = new kakao.maps.Map(container, options);
             
-        <hr>
-        <!-- 2단계 영역 선택-->
-        <h3><strong>[2단계]</strong> 영역선택</h3>
-        <div class="side-select" id="drawStore">
-            <ul class="draw">
-                
-                <li class=""><a href="javascript:void(0)" id="btnDrawCircle" title="원그리기 버튼"><span class="draw-circle"></span><br>원형</a></li>
-                <li><a href="javascript:void(0)" id="btnDrawRadius" title="반경그리기 버튼"><span class="draw-radius"></span><br>반경</a></li>
-                <li class=""><a href="javascript:void(0)" id="btnDrawPolygon" title="다각형그리기 버튼"><span class="draw-sided"></span><br>다각</a></li>
-                <li class="active"><a href="javascript:void(0)" id="btnDrawMajor" data-ng-click="showPopArea('M')"><span class="draw-commercial-area"></span><br>상권</a></li>
-            </ul>
             
-            <!-- 행정동 팝업 -->
-            <div class="layerwrap">
-                <div id="LayerPopAddress" class="layer-pop-address layer-pop-address-sm" style="display:none;">
-                    <ul>
-                        <li class="col-3"><strong>광역시도</strong>
-                            <div id="megaSelList_O" class="megaSelList"></div>
-                        </li>
-                        <li class="col-4"><strong>시군구</strong>
-                            <div id="ctySelList_O" class="ctySelList"></div>
-                        </li>
-                        <li class="col-5"><strong>읍면동</strong>
-                            <div id="admiSelList_O" class="admiSelList"></div>
-                        </li>
-                    </ul>
-                    <div class="layer-pop-address-footer">
-                        <a href="javascript:void(0);" data-ng-click="drawAreaShape()" class="btn btn-primary">확인</a> 
-                        <a href="javascript:CloseLayerPopAddress();" class="btn btn-white">취소</a>
-                    </div>
-                </div>
-            </div>
-            <!--// 행정동 팝업 -->
+        }
+    };
 
-            <!-- 상권 팝업 -->
-            <div class="layerwrap">
-                <div id="LayerPopCommercialArea" class="layer-pop-address layer-pop-address-md" style="z-index: 1100; display: none;">
-                    <ul>
-                        <li class="col-2"><strong>광역시도</strong>
-                            <div id="megaSelList_M" class="megaSelList"><ul class="ng-scope">
-<li><a href="javascript:void(0)" data-ng-click="selMega('', '전국')" title="" cd="">전국</a></li>
-<li class="selected"><a href="javascript:void(0)" data-ng-click="selMega('11', '서울')" cd="11" title="서울">서울</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('26', '부산')" cd="26" title="부산">부산</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('27', '대구')" cd="27" title="대구">대구</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('28', '인천')" cd="28" title="인천">인천</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('29', '광주')" cd="29" title="광주">광주</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('30', '대전')" cd="30" title="대전">대전</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('31', '울산')" cd="31" title="울산">울산</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('36', '세종')" cd="36" title="세종">세종</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('41', '경기')" cd="41" title="경기">경기</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('42', '강원')" cd="42" title="강원">강원</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('43', '충북')" cd="43" title="충북">충북</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('44', '충남')" cd="44" title="충남">충남</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('45', '전북')" cd="45" title="전북">전북</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('46', '전남')" cd="46" title="전남">전남</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('47', '경북')" cd="47" title="경북">경북</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('48', '경남')" cd="48" title="경남">경남</a></li>
-<li><a href="javascript:void(0)" data-ng-click="selMega('50', '제주')" cd="50" title="제주">제주</a></li>
-</ul></div>
-                        </li>
-                        <li class="col-2"><strong>시군구</strong>
-                            <div id="ctySelList_M" class="ctySelList"><ul class="ng-scope">
-<li class=""><a href="javascript:void(0)" ng-click="selCty('', '')" cd="" title="">전체</a></li>
-
-<li class="selected"><a href="javascript:void(0)" ng-click="selCty('1168', '강남구')" cd="1168" title="강남구">강남구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1174', '강동구')" cd="1174" title="강동구">강동구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1130', '강북구')" cd="1130" title="강북구">강북구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1150', '강서구')" cd="1150" title="강서구">강서구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1162', '관악구')" cd="1162" title="관악구">관악구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1121', '광진구')" cd="1121" title="광진구">광진구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1153', '구로구')" cd="1153" title="구로구">구로구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1154', '금천구')" cd="1154" title="금천구">금천구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1135', '노원구')" cd="1135" title="노원구">노원구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1132', '도봉구')" cd="1132" title="도봉구">도봉구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1123', '동대문구')" cd="1123" title="동대문구">동대문구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1159', '동작구')" cd="1159" title="동작구">동작구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1144', '마포구')" cd="1144" title="마포구">마포구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1141', '서대문구')" cd="1141" title="서대문구">서대문구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1165', '서초구')" cd="1165" title="서초구">서초구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1120', '성동구')" cd="1120" title="성동구">성동구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1129', '성북구')" cd="1129" title="성북구">성북구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1171', '송파구')" cd="1171" title="송파구">송파구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1147', '양천구')" cd="1147" title="양천구">양천구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1156', '영등포구')" cd="1156" title="영등포구">영등포구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1117', '용산구')" cd="1117" title="용산구">용산구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1138', '은평구')" cd="1138" title="은평구">은평구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1111', '종로구')" cd="1111" title="종로구">종로구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1114', '중구')" cd="1114" title="중구">중구</a></li>
-
-<li><a href="javascript:void(0)" ng-click="selCty('1126', '중랑구')" cd="1126" title="중랑구">중랑구</a></li>
-
-</ul></div>
-                        </li>
-                        <li class="col-4"><strong>상권영역</strong>
-                            <ul id="major_area" class="majorSelList" style="display: none;">
-                                <li class="selected"><a href="javascript:void(0)" data-ng-click="showMajorList('majorSg2016')">주요상권(2016년)</a></li>
-                                <li><a href="javascript:void(0)" data-ng-click="showMajorList('trdMarket')">전통시장</a></li>
-                                <li><a href="javascript:void(0)" data-ng-click="showMajorList('underShop')">지하상가</a></li>
-                                <li><a href="javascript:void(0)" data-ng-click="showMajorList('subway')">지하철</a></li>
-                                <li><a href="javascript:void(0)" data-ng-click="showMajorList('ktx')">KTX</a></li>
-                                <li><a href="javascript:void(0)" data-ng-click="showMajorList('majorSg')">주요상권(2014년)</a></li>
-                            </ul>
-                        </li>
-                        <li class="col-4"><strong>상권</strong>
-                            <div id="majorStoreList" class="majorStoreSelList"></div>
-                        </li>
-                    </ul>
-                    <div class="layer-pop-address-footer">
-                        <a href="javascript:void(0);" data-ng-click="hideMajor()" class="btn btn-primary">확인</a> 
-                        <a href="javascript:void(0);" data-ng-click="hideMajor()" class="btn btn-white">취소</a>
-                    </div>
-                </div>
-            </div>
-            <!--// 상권 팝업 -->
-          
-            <!-- 상권그리기 알림팝업 -->
-            <div id="LayerPopDraw1" class="layer-pop layer-pop-xs" style="display:none; top:200px; left:400px; z-index:1400;">
-                <h5><i class="fa fa-exclamation-circle" aria-hidden="true"></i> 원형그리기<a href="javascript:CloseLayerPopDraw1();" class="close" title="원형그리기 안내팝업 닫기 버튼">×</a></h5>
-                <div class="layer-pop-noti">
-                    <p class="text-center">중심점을 클릭 후 <br>드래그 하세요</p>
-                    <p>
-                        원형: 50m~1,500m 이내<br>
-                        현재 <span class="label label-warning">30m</span> 입니다.
-                    </p>
-                </div>
-            </div>
-            <!-- /상권그리기 알림팝업 -->
-
-            <!-- 상권명 입력 팝업 -->
-            <div id="LayerPopDraw2" class="layer-pop layer-pop-sm" style="display:none; top:130px; left:425px;">
-                <h4><i class="fa fa-exclamation-circle" aria-hidden="true"></i> 알림<a href="javascript:CloseLayerPopDraw2();" class="close" title="상권명 입력팝업 닫기 버튼">×</a></h4>
-                <div class="layer-pop-body">
-                    <p class="text-center">최소반경은 <span class="point">50m</span> 입니다. </p>
-                </div>
-                <div class="layer-pop-footer">
-                    <a href="javascript:CloseLayerPopDraw2();" class="btn btn-default btm-btn" title="상권명 입력 확인 버튼">확인</a>
-                </div>
-            </div>
-            <!-- /상권명 입력 팝업 -->
-
-            <!-- 상권명 입력 팝업 -->
-            <div id="LayerPopDraw3" class="layer-pop layer-pop-md" style="display:none; top:100px; left:400px;">
-                <h4>상권영역선정<a href="javascript:CloseLayerPopDraw3();" class="close" title="상권명 입력팝업 닫기 버튼">×</a></h4>
-                <div class="layer-pop-body">
-                    <p class="text-center">상권영역은 <span class="point">최대 3개</span>까지 그릴 수 있습니다.(총 3개 중 <span class="point">3</span>)</p>
-                </div>
-                <div class="layer-pop-body-grey">
-                    <p class="grey">상권을 그린 영역을 구분할 수 있는 상권명을 입력해 주세요.<br>
-                    여러 개를 그릴 때 구분하는 이름입니다.</p>
-                    <form class="form-inline text-center ng-pristine ng-valid">
-                        <div class="form-group">
-                            <label class="sr-only">상권명</label>
-                            <p class="form-control-static"><strong>상권명</strong></p>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputname" class="sr-only">상권입력</label>
-                            <input type="text" class="form-control" id="inputname" value="제1상권">
-                            <p class="form-control-static">상권</p>
-                        </div>
-                    </form>
-                </div>
-                <div class="layer-pop-footer">
-                    <a href="javascript:CloseLayerPopDraw3();" class="btn btn-primary btm-btn" title="상권명 입력 완료 버튼">확인</a>
-                    <a href="javascript:CloseLayerPopDraw3();" class="btn btn-white btm-btn" title="상권명 입력 취소 버튼">취소</a>
-                </div>
-            </div>
-            <!-- /상권명 입력 팝업 -->
-            
-              <ul class="draw-text">								
-                  <li class="col3"><span>총  <strong class="point">3</strong> 개 영역 선택가능</span></li>
-                  <li class="col1"><span>단일선택</span></li>
-            </ul>
-                  
-            <p class="text-info" id="featureLength">총 <strong class="point">3</strong>개중 <strong class="point">0</strong>개 설정</p>
-            <ol>
-                <li id="featureLi1" style=""><span id="featureLabel1">단일영역</span><a href="javascript:void(0)" data-ng-click="deleteFeature(1)" class="fr grey" title="1상권영역 삭제 버튼"><i class="fa fa-times" aria-hidden="true"><span class="hidden">지우기</span></i></a></li>
-                <li id="featureLi2" style="display: none;"><span id="featureLabel2"></span><a href="javascript:void(0)" data-ng-click="deleteFeature(2)" class="fr grey" title="2상권영역 삭제 버튼"><i class="fa fa-times" aria-hidden="true"><span class="hidden">지우기</span></i></a></li>
-                <li id="featureLi3" style="display: none;"><span id="featureLabel3"></span><a href="javascript:void(0)" data-ng-click="deleteFeature(3)" class="fr grey" title="3상권영역 삭제 버튼"><i class="fa fa-times" aria-hidden="true"><span class="hidden">지우기</span></i></a></li>
-            </ol>
-        </div>  
-        <!-- /2단계 상권그리기-->
+    geocoder.addressSearch("'"+codeNm+"'", callback);
     
-        <hr>
-        <!-- 3단계 업종선택-->
-        <h3 id="selectUpjong"><strong>[3단계]</strong> 업종선택</h3>
-        <div class="side-select">
-                      <a href="javascript:void(0)" data-ng-click="showUpjong()" class="btn btn-select btn-block">업종을 선택하여 주십시오.</a>
-          
-                      <!-- 업종선택팝업 -->
-                      <div id="LayerPopCategory" class="layer-pop layer-pop-lg" style="top: 0px; left: 140px; display: block;"><h4 class="ng-scope">업종선택<a href="javascript:CloseLayerPopCategory();" class="close">×</a></h4>
-<div class="layer-pop-body ng-scope">
-
-    <div class="layer-pop-body-search">
-        <form class="form-inline text-center ng-pristine ng-valid">
-            <div class="input-group"><!-- 업종검색 입력박스 -->
-                <label for="keyword" class="sr-only">업종검색</label>
-                <input type="text" class="form-control ng-pristine ng-valid" placeholder="업종검색" id="keyword" name="keyword" data-ng-model="allUpjongKeyword">
-                <span class="input-group-btn">
-                    <a class="btn btn-grey" href="javascript:void(0)" data-ng-click="searchAllUpjong()"><img src="/static/img/ico-search.png" alt="검색"></a>
-                </span>
-            </div>  <!-- /업종검색 입력박스 -->
-        </form>
-    </div>
-
-    <!-- 탭 -->
-    <ul class="nav nav-tabs depth-1" role="tablist">
-        <li class="active"><a href="#category1" role="tab" data-toggle="tab">요식업</a></li>
-        <li><a href="#category2" role="tab" data-toggle="tab">소매</a></li>
-    </ul><!-- /탭 -->
-
-    <div class="tab-content" id="allUpjongTable">  
-        <div class="tab-pane active" id="category1">
-        <div id="up1Tab_Q" class="categorylist"><!-- 업종카테고리 -->
-            <ul>
-                <li>음식
-                <ul> 
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="Q01" value="Q01A02" upnm="갈비/삼겹살" data-ng-click="checkUpjong('Q01A02')" data-role="collar"><span class="control-indicator"></span>한식</label></li>   
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="Q01" value="Q01A03" upnm="곱창/양구이전문" data-ng-click="checkUpjong('Q01A03')" data-role="collar"><span class="control-indicator"></span>양식</label></li>   
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="Q01" value="Q01A21" upnm="기사식당" data-ng-click="checkUpjong('Q01A21')" data-role="collar"><span class="control-indicator"></span>일식</label></li>   
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="Q01" value="Q01A21" upnm="기사식당" data-ng-click="checkUpjong('Q01A21')" data-role="collar"><span class="control-indicator"></span>중식</label></li> 
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="Q01" value="Q01A99" upnm="기타고기요리" data-ng-click="checkUpjong('Q01A99')" data-role="collar"><span class="control-indicator"></span>패스트푸드</label></li>   
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="Q01" value="Q01A21" upnm="기사식당" data-ng-click="checkUpjong('Q01A21')" data-role="collar"><span class="control-indicator"></span>뷔페</label></li>   
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="Q01" value="Q01A21" upnm="기사식당" data-ng-click="checkUpjong('Q01A21')" data-role="collar"><span class="control-indicator"></span>일반대중음식</label></li>  
-                </ul>
-                </li>                                       
-            
-                <li>커피 및 주류
-                <ul> 
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="Q02" value="Q02A00" upnm="중국음식/중국집" data-ng-click="checkUpjong('Q02A00')" data-role="collar"><span class="control-indicator"></span>커피전문점</label></li>   
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="Q02" value="Q02A01" upnm="탕수육전문점" data-ng-click="checkUpjong('Q02A01')" data-role="collar"><span class="control-indicator"></span>단란주점</label></li>   
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="Q02" value="Q02A01" upnm="탕수육전문점" data-ng-click="checkUpjong('Q02A01')" data-role="collar"><span class="control-indicator"></span>맥주홀</label></li>
-                </ul>
-                </li>                                       
-            
-                <li>제과제빵떡케익
-                <ul> 
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="Q03" value="Q03A11" upnm="갈치/생선구이" data-ng-click="checkUpjong('Q03A11')" data-role="collar"><span class="control-indicator"></span>제과점</label></li>   
-                </ul>
-                </li>     
-                
-                <li>건강식품
-                <ul> 
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="Q03" value="Q03A11" upnm="갈치/생선구이" data-ng-click="checkUpjong('Q03A11')" data-role="collar"><span class="control-indicator"></span>인삼 및 건강식품</label></li>   
-                </ul>
-                </li>
-            </ul>
-        </div>
-        </div>
-        
-            
-        <div class="tab-pane " id="category2">
-        <div id="up1Tab_F" class="categorylist"><!-- 업종카테고리 -->
-            <ul>
-            <li>식료품소매
-                <ul> 
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="F01" value="F01A04" upnm="남성미용실" data-ng-click="checkUpjong('F01A04')" data-role="collar"><span class="control-indicator"></span>정육점</label></li>   
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="F01" value="F01A05" upnm="미용실-어린이" data-ng-click="checkUpjong('F01A05')" data-role="collar"><span class="control-indicator"></span>청과물</label></li>   
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="F01" value="F01A02" upnm="발/네일케어" data-ng-click="checkUpjong('F01A02')" data-role="collar"><span class="control-indicator"></span>농수산물</label></li>   
-                </ul>
-            </li> 
-
-            <li>종합소매
-                <ul> 
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="F03" value="F03A04" upnm="가구수리" data-ng-click="checkUpjong('F03A04')" data-role="collar"><span class="control-indicator"></span>할인점/슈퍼마켓</label></li>   
-                <li><label class="control checkbox"><input type="checkbox" class="add-contrast" name="F03" value="F03A03" upnm="가방구두수전" data-ng-click="checkUpjong('F03A03')" data-role="collar"><span class="control-indicator"></span>편의점</label></li>   
-                </ul>
-            </li>
-            </ul>
-            </div>
-            </div>
-          
-    </div>
-    <div class="categorylist" id="allUpjongResult" data-ng-show="upjongSearchFlag" style="display: none;"><!-- 업종카테고리 -->
-    </div>
     
+    
+    
+  });
+});
 
-</div>
+function fn_option(code, name){
+  return '<option value="' + code +'">' + name +'</option>';
+}
 
-<div class="layer-pop-footer-grey ng-scope">
-    <a href="javascript:void(0)" data-ng-click="selectAllUpjong()" class="btn btn-primary btm-btn">확인</a>
-    <a href="javascript:void(0)" data-ng-click="closeUpjongPopup()" class="btn btn-white btm-btn">취소</a>                                     
-</div></div>
-                      <!-- /업종선택팝업 -->
-                      
-                      <p class="text-info">동일분류 내에서 <strong class="point">3</strong>개 업종 선택 가능</p> 
-                      <div id="upjongListDiv">
-                          <ol>
-                              <li name="upjong3Select_1" style="display: none;"><span class="t">&nbsp;</span><a href="javascript:void(0)" data-ng-click="deleteUpjong3Select(0)" class="fr grey" title="선택1업종 삭제 버튼"><i class="fa fa-times" aria-hidden="true"><span class="hidden">지우기</span></i></a></li>
-                              <li name="upjong3Select_2" style="display: none;"><span class="t">&nbsp;</span><a href="javascript:void(0)" data-ng-click="deleteUpjong3Select(1)" class="fr grey" title="선택2업종 삭제 버튼"><i class="fa fa-times" aria-hidden="true"><span class="hidden">지우기</span></i></a></li>
-                              <li name="upjong3Select_3" style="display: none;"><span class="t">&nbsp;</span><a href="javascript:void(0)" data-ng-click="deleteUpjong3Select(2)" class="fr grey" title="선택3업종 삭제 버튼"><i class="fa fa-times" aria-hidden="true"><span class="hidden">지우기</span></i></a></li>
-                          </ol>
-                          <ul id="upjong3Result" style="display: none;"><li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A01">한식/백반/한정식</label></li>
 
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A02">갈비/삼겹살</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A03">곱창/양구이전문</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A04">한정식전문</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A05">해장국/감자탕</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A06">돌솥/비빕밥전문점</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A07">부대찌개/섞어찌개</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A08">족발/보쌈전문</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A09">설렁탕집</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A10">쌈밥전문</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A11">두부요리전문</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A12">재첩국전문</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A13">파전전문</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A14">추어탕전문</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A15">순두부전문</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A16">보리밥전문</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A17">버섯전문점</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A18">황태전문</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A19">냉면집</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(false)" value="Q01A21">기사식당</label></li>
-
-<li class="ng-scope"><label><input type="checkbox" name="upjong3Cd" ng-init="registerCheckBox(true)" value="Q01A99">기타고기요리</label></li></ul>
-                      </div>
-                  </div>
-
-        <hr>
-        <div class="side-select-btm">
-            <a href="javascript:void(0)" data-ng-click="eraseData()" class="btn btn-secondary btm-btn btn-lg" title="초기화 버튼">초기화</a>&nbsp;
-            <a href="javascript:void(0)" data-ng-click="getDrawData()" class="btn btn-primary btm-btn btn-lg fr" title="분석하기 버튼">분석하기</a>
-        </div><!-- /.side-select-btm -->                        
-
-    </div><!-- /.side-select-area -->
-    <div id="contentWrapper" class="map-right-area">
-        <div id="roadViewWrapper" style="height:0px;width:719px;">
-            <div class="mRoadview" style="width:100%;">
-                <span class="fullView"><a href="javascript:void(0)" class="btnFullSizeRoadView" title="다음 로드뷰 전체보기 버튼"><span class="sr-only">전체보기</span></a></span>
-                <span class="iClose"><a href="javascript:void(0)" class="btnCloseRoadView" title="다음 로드뷰 닫기 버튼"><span class="sr-only">로드뷰 닫기</span></a></span>
-            </div>
-            
-            <div id="daumRoadView" style="width:100%;height:100%;"></div>
-        </div>
-        
-            <div id="analyMap" data-ng-controller="mapController" data-ng-init="init(314691,551861);setRadius(1500);" class="map-api-bg ng-scope olMap"><div id="OpenLayers.Map_15_OpenLayers_ViewPort" class="olMapViewport olControlDragPanActive olControlZoomBoxActive olControlPinchZoomActive olControlNavigationActive olControlMousePositionActive olControlSelectFeatureActive olControlDrawFeatureActive" style="position: relative; overflow: hidden; width: 100%; height: 100%;"><div id="OpenLayers.Map_15_OpenLayers_Container" style="position: absolute; width: 100px; height: 100px; z-index: 749; left: 0px; top: 0px;"><div id="OpenLayers.Layer.Vector_27" dir="ltr" class="olLayerDiv" style="position: absolute; width: 100%; height: 100%; z-index: 725; left: 0px; top: 0px;"><svg id="OpenLayers.Layer.Vector_27_svgRoot" width="719" height="631" style="display: block;" viewBox="0 0 719 631"><g id="OpenLayers.Layer.Vector_27_root" transform="" style="visibility: visible;"><g id="OpenLayers.Layer.Vector_27_vroot"></g><g id="OpenLayers.Layer.Vector_27_troot"></g></g></svg><div id="cursorHelp" style="position: absolute; width: 200px; height: 120px; zoom: 1; opacity: 1; left: 2px; top: 94px; display: none;" class="layer-pop" layer-pop-xs="" layer-pop-center=""><div class="layer-pop-noti"><h5>다각형 그리기</h5><br><p class="text-center">더블 클릭으로 종료</p></div><span class="value" style="margin-left: 130px;"></span></div></div><div id="OpenLayers.Layer.Vector_33" dir="ltr" class="olLayerDiv" style="position: absolute; width: 100%; height: 100%; z-index: 330; left: 0px; top: 0px;"><svg id="OpenLayers.Layer.Vector_33_svgRoot" width="719" height="631" style="display: block;" viewBox="0 0 719 631"><g id="OpenLayers.Layer.Vector_33_root" transform="" style="visibility: visible;"><g id="OpenLayers.Layer.Vector_33_vroot"><path id="OpenLayers.Geometry.Polygon_732" d=" M 633.7117134150612,180.455804963196 660.8426629653732,251.54712947920052 597.4651095086192,275.2209630465295 593.348616382882,264.2640004262066 603.1872720296051,260.78440844891156 597.5297417690199,245.96857157371414 618.8187031043453,237.74220488550054 621.7664956430308,244.58632930065505 627.7064891939553,238.89796890084108 626.4383056140068,225.4106315891986 640.3831749533674,220.13735489471583 626.7372913229738,182.90495824016398 625.3663444997437,183.29452891569235 623.8597929068346,182.6854798254135 618.8497567830309,169.98789825553104 628.4397510968047,166.63593479868723 633.7117134150612,180.455804963196 z" fill-rule="evenodd" fill="#e96be9" fill-opacity="0.5" stroke="#e96be9" stroke-opacity="1" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="20,20" pointer-events="visiblePainted" cursor="inherit"></path></g><g id="OpenLayers.Layer.Vector_33_troot"></g></g></svg></div><div style="margin: 0px; position: absolute; display: none; left: 630px; top: -677px; opacity: 1; z-index: 751;">
-<span style="background:#F7F7F9;float:left;width:100%;padding:5px 5px 5px 5px;border:1px solid #7E7E7D;"></span>
-<div class="labelArr" style="top:9px;"></div>
-</div><div class="mLayer1" style="display: none; left: 610px; top: -757px; opacity: 1; z-index: 752;">
-<div class="con">
-<div class="hd"></div>
-<div class="bd">
-  <span></span>
-</div>
-<a class="iClose" id="closeNadleInfoPopup">닫기</a>
-</div>
-</div><div id="OpenLayers.Layer.Vector_78" dir="ltr" class="olLayerDiv" style="position: absolute; width: 100%; height: 100%; z-index: 325; left: 0px; top: 0px;"><svg id="OpenLayers.Layer.Vector_78_svgRoot" width="719" height="631" viewBox="0 0 719 631" style="display: block;"><g id="OpenLayers.Layer.Vector_78_root" transform="" style="visibility: visible;"><g id="OpenLayers.Layer.Vector_78_vroot"></g><g id="OpenLayers.Layer.Vector_78_troot"></g></g></svg></div><div id="OpenLayers.Layer.Vector_685" dir="ltr" class="olLayerDiv" style="position: absolute; width: 100%; height: 100%; z-index: 345; left: 0px; top: 0px;"><svg id="OpenLayers.Layer.Vector_685_svgRoot" width="719" height="631" viewBox="0 0 719 631" style="display: block;"><g id="OpenLayers.Layer.Vector_685_root" transform="" style="visibility: visible;"><g id="OpenLayers.Layer.Vector_685_vroot"><path id="OpenLayers.Geometry.Polygon_691" d=" M -291.8500366212502,532.5 2,84 -291.8500366212502,532.5 z" fill-rule="evenodd" fill="#66cccc" fill-opacity="0.2" stroke="#66cccc" stroke-opacity="1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="none" pointer-events="visiblePainted" cursor="inherit"></path><circle id="OpenLayers.Geometry.Point_693" cx="2" cy="84" r="6" fill="#66cccc" fill-opacity="0.2" stroke="#66cccc" stroke-opacity="1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="none" pointer-events="visiblePainted" cursor="inherit"></circle></g><g id="OpenLayers.Layer.Vector_685_troot"></g></g></svg></div><div name="areaName" style="position: absolute; width: 56px; height: 20px; left: 588px; top: 231px; opacity: 1; z-index: 753;" class="layer-pop layer-pop-xs layer-pop-center"><p class="layer-pop-noti" style="text-align: center;">강남역_5</p></div></div><div id="OpenLayers.Control.MousePosition_14" class="olControlMousePosition olControlNoSelect" unselectable="on" style="position: absolute; z-index: 1002;">309766.76888, 546143.23258</div><div id="defaultSelectControl" class="olControlSelectFeature olControlNoSelect" unselectable="on" style="position: absolute; z-index: 1003;"></div><div id="OpenLayers.Control.DrawFeature_40" class="olControlDrawFeature olControlNoSelect" unselectable="on" style="position: absolute; z-index: 1004;"></div><div id="OpenLayers.Control.DrawFeature_46" class="olControlDrawFeature olControlNoSelect" unselectable="on" style="position: absolute; z-index: 1005;"></div><div id="OpenLayers.Control.DrawFeature_52" class="olControlDrawFeature olControlNoSelect" unselectable="on" style="position: absolute; z-index: 1006;"></div><div id="OpenLayers.Control.DrawFeature_58" class="olControlDrawFeature olControlNoSelect" unselectable="on" style="position: absolute; z-index: 1007;"></div><div id="OpenLayers.Control.ModifyFeature_65" class="olControlModifyFeature olControlNoSelect" unselectable="on" style="position: absolute; z-index: 1008;"></div><div id="OpenLayers.Layer.daum.v38_72" dir="ltr" class="olLayerDiv" style="position: absolute; width: 100%; height: 100%; z-index: 115;"><div id="OpenLayers-Map_15_DDMapContainer" style="position: absolute; width: 100%; height: 100%; overflow: hidden; background: url(&quot;http://t1.daumcdn.net/mapjsapi/images/2x/bg_tile.png&quot;);"><div style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; touch-action: none;"><div style="position: absolute; left: 576px; top: -4293px;"><div style="position: absolute; z-index: 0; left: 0px; top: 0px;"><img src="http://map1.daumcdn.net/map_2d_hd/1909dms/L4/983/449.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -690px; top: 4754px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map2.daumcdn.net/map_2d_hd/1909dms/L4/983/450.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -434px; top: 4754px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map3.daumcdn.net/map_2d_hd/1909dms/L4/983/451.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -178px; top: 4754px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d_hd/1909dms/L4/983/452.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 78px; top: 4754px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map1.daumcdn.net/map_2d_hd/1909dms/L4/984/449.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -690px; top: 4498px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map2.daumcdn.net/map_2d_hd/1909dms/L4/984/450.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -434px; top: 4498px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map3.daumcdn.net/map_2d_hd/1909dms/L4/984/451.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -178px; top: 4498px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d_hd/1909dms/L4/984/452.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 78px; top: 4498px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map1.daumcdn.net/map_2d_hd/1909dms/L4/985/449.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -690px; top: 4242px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map2.daumcdn.net/map_2d_hd/1909dms/L4/985/450.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -434px; top: 4242px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map3.daumcdn.net/map_2d_hd/1909dms/L4/985/451.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -178px; top: 4242px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d_hd/1909dms/L4/985/452.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 78px; top: 4242px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map1.daumcdn.net/map_2d_hd/1909dms/L4/986/449.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -690px; top: 3986px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map2.daumcdn.net/map_2d_hd/1909dms/L4/986/450.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -434px; top: 3986px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map3.daumcdn.net/map_2d_hd/1909dms/L4/986/451.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -178px; top: 3986px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d_hd/1909dms/L4/986/452.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 78px; top: 3986px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"></div><div style="position: absolute; z-index: 1; left: 0px; top: 0px;"><img src="http://map3.daumcdn.net/map_2d_hd/1909dms/L6/244/111.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -654px; top: 4900px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d_hd/1909dms/L6/244/112.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -398px; top: 4900px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map1.daumcdn.net/map_2d_hd/1909dms/L6/244/113.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -142px; top: 4900px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map2.daumcdn.net/map_2d_hd/1909dms/L6/244/114.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 114px; top: 4900px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map3.daumcdn.net/map_2d_hd/1909dms/L6/245/111.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -654px; top: 4644px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d_hd/1909dms/L6/245/112.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -398px; top: 4644px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map1.daumcdn.net/map_2d_hd/1909dms/L6/245/113.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -142px; top: 4644px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map2.daumcdn.net/map_2d_hd/1909dms/L6/245/114.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 114px; top: 4644px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map3.daumcdn.net/map_2d_hd/1909dms/L6/246/111.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -654px; top: 4388px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d_hd/1909dms/L6/246/112.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -398px; top: 4388px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map1.daumcdn.net/map_2d_hd/1909dms/L6/246/113.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -142px; top: 4388px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map2.daumcdn.net/map_2d_hd/1909dms/L6/246/114.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 114px; top: 4388px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map3.daumcdn.net/map_2d_hd/1909dms/L6/247/111.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -654px; top: 4132px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map0.daumcdn.net/map_2d_hd/1909dms/L6/247/112.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -398px; top: 4132px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map1.daumcdn.net/map_2d_hd/1909dms/L6/247/113.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: -142px; top: 4132px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"><img src="http://map2.daumcdn.net/map_2d_hd/1909dms/L6/247/114.png" alt="" draggable="false" style="position: absolute; user-select: none; -webkit-user-drag: none; min-width: 0px; min-height: 0px; max-width: none; max-height: none; left: 114px; top: 4132px; opacity: 1; transition-property: opacity; transition-duration: 0.2s; transition-timing-function: ease; width: 256px; height: 256px;"></div><div style="position: absolute; z-index: 1;"></div><div style="width: 719px; height: 630px; position: absolute; z-index: 1;"></div><div style="position: absolute; z-index: 1;"><svg version="1.1" style="stroke: none; stroke-dashoffset: 0.5; stroke-linejoin: round; fill: none; transform: translateZ(0px); position: absolute; left: -2014px; top: 3033px; width: 3595px; height: 3150px;" viewBox="0 0 3595 3150"><defs></defs></svg></div><div style="position: absolute; z-index: 1; width: 100%; height: 0px; transform: translateZ(0px);"></div></div></div><div style="position: absolute; cursor: default; z-index: 1; margin: 0px 6px; height: 19px; line-height: 14px; left: 0px; bottom: 0px; color: rgb(0, 0, 0);"><div style="color: rgb(0, 0, 0); text-align: center; font-size: 10px; float: left;"><div style="float: left; margin: 2px 3px 0px 4px; height: 6px; transition: width 0.1s ease 0s; border-top: none rgb(0, 0, 0); border-right: 2px solid rgb(0, 0, 0); border-bottom: 2px solid rgb(0, 0, 0); border-left: 2px solid rgb(0, 0, 0); border-image: initial; width: 58px;"></div><div style="float: left; margin: 0px 4px 0px 0px; font-family: AppleSDGothicNeo-Regular, 돋움, dotum, sans-serif; font-weight: bold; color: rgb(0, 0, 0);">500m</div></div><div style="margin: 0px 4px; float: left;"><a target="_blank" href="http://map.kakao.com/" title="Kakao 지도로 보시려면 클릭하세요." style="float: left; width: 32px; height: 10px;"><img src="http://t1.daumcdn.net/mapjsapi/images/2x/m_bi_b.png" alt="Kakao 지도로 이동" style="float: left; width: 32px; height: 10px; border: none;"></a><div style="font: 11px/11px Arial, Tahoma, Dotum, sans-serif; float: left;"></div></div></div><div style="cursor: auto; position: absolute; z-index: 2; left: 0px; top: 0px;"></div></div></div><div id="OpPanelLeft" class="OpUtilOpPanelLeft olControlNoSelect" unselectable="on" style="position: absolute; display: block; z-index: 1009;"><div class="themeItem" id="OpPanelLeft-wrapper">
-<ul id="markerSelect" class="map-control">
-<li><a href="javascript:void(0)"><img src="./assets/img/map-control1.png" alt="소상공인"><span>소상공인</span></a>
-  <ul style="width:200px;">
-      <li class="ns sg-service" data-id="nadle"><a href="javascript:void(0)"><img src="/static/img/map-control1a.png" alt="나들가게"><span>나들가게</span></a></li>
-      <li class="fr sg-service " data-id="franchise"><a href="javascript:void(0)"><img src="/static/img/map-control1c.png" alt="우수프랜차이즈"><span>우수프랜차이즈</span></a></li>
-      <li class="fr sg-service " data-id="longStore"><a href="javascript:void(0)"><img src="/static/img/map-control1c.png" alt="백년가게"><span>백년가게</span></a></li>
-      <li class="sc sg-service" data-id="301"><a href="javascript:void(0)"><img src="/static/img/map-control1b.png" alt="지원센터"><span>지원센터</span></a></li>
-  </ul>                       
-</li>
-<li><a href="javascript:void(0)"><img src="./assets/img/map-control5.png" alt="시설물"><span>시설물</span></a>
-  <ul style="width:200px;">
-
-      <li class="pc1 sg-service" data-id="101"><a href="javascript:void(0)"><img src="/static/img/map-control5b.png" alt="관공서"><span>관공서</span></a></li>
-      <li class="pc2 sg-service" data-id="102"><a href="javascript:void(0)"><img src="/static/img/map-control5c.png" alt="금융"><span>금융</span></a></li>
-      <li class="pc3 sg-service" data-id="103"><a href="javascript:void(0)"><img src="/static/img/map-control5d.png" alt="병원"><span>병원</span></a></li>
-      <li class="pc4 sg-service" data-id="104"><a href="javascript:void(0)"><img src="/static/img/map-control5e.png" alt="학교"><span>학교</span></a></li>
-      <li class="pc5 sg-service" data-id="201"><a href="javascript:void(0)"><img src="/static/img/map-control5f.png" alt="유통점"><span>유통점</span></a></li>
-      <li class="pc6 sg-service" data-id="202"><a href="javascript:void(0)"><img src="/static/img/map-control5g.png" alt="문화"><span>문화</span></a></li>
-      <li class="pc7 sg-service" data-id="204"><a href="javascript:void(0)"><img src="/static/img/map-control5h.png" alt="호텔"><span>호텔</span></a></li>
-      <li class="pc8 sg-service" data-id="205"><a href="javascript:void(0)"><img src="/static/img/map-control5i.png" alt="교통"><span>교통</span></a></li>
-  </ul>                       
-</li>
-</ul>
-</div></div><div id="OpPanelRight" class="OpUtilOpPanelRight olControlNoSelect" unselectable="on" style="position: absolute; z-index: 1010;"><div class="MapControlView" id="OpPanelRight-wrapper">	
-<div class="viewbuttons">
-<a data-id="roadview" class="sv"><span class="sr-only">스카이뷰보기</span><i></i></a>
-<a data-id="roadview" class="rv"><span class="sr-only">로드뷰보기</span><i></i></a>
-<!-- 19-04-02 : 밀도Hidden 		
-<div data-id="btnDensity" class="btnDensity">
-  <a class="btnDensitytext"><span class="sr-only">밀도</span></a>
-  <ul data-id="trafficMenu" class="DensityMenu">
-      <li><label class="control checkbox"><input type="checkbox" class="add-contrast" data-role="collar" data-id="POINTPOP" title="인구밀도"><span class="control-indicator"></span>인구밀도</label></li>
-      <li><label class="control checkbox"><input type="checkbox" class="add-contrast" data-role="collar" data-id="STORE" title="상가밀도"><span class="control-indicator"></span>상가밀도</label></li>
-      <li><label class="control checkbox"><input type="checkbox" class="add-contrast" data-role="collar" data-id="EMPPOP" title="직장인구밀도"><span class="control-indicator"></span>직장인구밀도</label></li>
-      <li><label class="control checkbox"><input type="checkbox" class="add-contrast" data-role="collar"  data-id="FLOWPOP" title="유동인구밀도"><span class="control-indicator"></span>유동인구밀도</label></li>
-  </ul>
-</div>
--->
-</div>
-<div class="sgZoomControl">
-<div class="zoomcontrol" data-id="zoomcontrol">
-  <a class="zoomin zoomin-ACTIVE" data-id="zoomin"></a>
-  <div class="zoombar changedzoombar " data-id="zoombar" style="cursor: pointer;">
-      <div class="zoomedbar changedzoomedbar" data-id="zoomedbar" style="height: 49px;">
-
-      </div>
-      <div class="zoomtext changedzoomtext" data-id="zoomtext" style="display: none;">
-
-      </div>
-      <div class="slider" data-id="slider" style="margin-top: 49px;"></div>
-  </div>
-  <a class="zoomout zoomout-ACTIVE" data-id="zoomout"></a>
-</div>
-</div>
-
-<div data-id="tools" class="tools">
-<a data-id="distance" class="distance">거리재기</a>
-<a data-id="area" class="area">면적재기</a>
-<a data-id="clear" class="clear">모두지우기</a>
-<div data-id="tooltext" class="tooltext">
-  <a data-id="tooltextDistance" class="tooltextDistance"></a>
-  <a data-id="tooltextArea" class="tooltextArea"></a>
-  <a data-id="tooltextClear" class="tooltextClear"></a>
-</div>
-</div>	
-</div></div></div></div>
-        
-        
-    </div>
-</div>
+	</script>
+		
+	
+	<div  style="  margin-left:180px;">
+		<select id="sido">
+			<option value="">선택</option>
+		</select>
+		<select id="sigugun">
+			<option value="">선택</option>
+		</select>
+		<select id="dong">
+			<option value="">선택</option>
+		</select>
+		</div>
 
 </body>
 </html>
+
+{% endblock %}

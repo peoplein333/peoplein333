@@ -1,0 +1,38 @@
+{% extends "../base.html" %}                   <!--base.html을 상속받는다고 선언-->
+{% block title %}{{ notice.title }}{% endblock %}
+{% load staticfiles %}
+{% block extrastyle %}{% static "notice.css" %}{% endblock %}
+{% block content %}
+
+   <!-- jQuery CDN -->
+    <script
+    src="https://code.jquery.com/jquery-1.12.4.min.js"
+    integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+    crossorigin="anonymous"></script>
+     <!-- highcharts CDN -->
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+    <script src="https://code.highcharts.com/modules/treemap.js"></script>
+
+    {% load chartit %}
+    {{ chart_list|load_charts:"cht"}}
+
+<div class="board_header">
+
+		<span class="favorite_button favorites_24761 active" onclick="location.href='{% url 'franchise:franchise_list' %}'">
+{#            <i class="fas"></i></span>#}
+        <a class="a_header" href="{% url 'franchise:franchise_list' %}">
+            <span class="franchise_list">프랜차이즈</span>
+        </a>
+      </span>
+<hr class="my-hr3">
+  <div style="height:200px;"></div>
+</div>
+
+    <div id='cht' style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">  </div>
+
+
+{% endblock %}
