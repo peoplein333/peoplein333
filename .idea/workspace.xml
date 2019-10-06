@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0c4dbe09-db6f-47b6-a41d-0d54586397f1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/peopleIn/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/peopleIn/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peopleIn/templates/home_base.html" beforeDir="false" afterPath="$PROJECT_DIR$/peopleIn/templates/home_base.html" afterDir="false" />
-    </list>
+    <list default="true" id="0c4dbe09-db6f-47b6-a41d-0d54586397f1" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +46,7 @@
           <entry key="gitignore" value="2" />
           <entry key="html" value="68" />
           <entry key="js" value="4" />
-          <entry key="py" value="71" />
+          <entry key="py" value="72" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -58,7 +55,7 @@
           <entry key="HTML" value="68" />
           <entry key="JavaScript" value="4" />
           <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Python" value="71" />
+          <entry key="Python" value="72" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -89,6 +86,15 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="208">
               <caret line="140" column="1" lean-forward="true" selection-start-line="140" selection-start-column="1" selection-end-line="140" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/peopleIn/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="207">
+              <caret line="23" column="40" lean-forward="true" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -146,7 +152,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/peopleIn/templates/home_base.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="96">
@@ -168,15 +174,6 @@
         <entry file="file://$PROJECT_DIR$/peopleIn/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-27" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="5" column="9" lean-forward="true" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
-            </state>
           </provider>
         </entry>
       </file>
@@ -239,7 +236,6 @@
         <option value="$PROJECT_DIR$/sang/templates/sang/sang3.html" />
         <option value="$PROJECT_DIR$/ticket/views.py" />
         <option value="$PROJECT_DIR$/ticket/templates/ticket/ticket.html" />
-        <option value="$PROJECT_DIR$/peopleIn/urls.py" />
         <option value="$PROJECT_DIR$/ticket/urls.py" />
         <option value="$PROJECT_DIR$/ticket/templates/ticket/pay_index.html" />
         <option value="$PROJECT_DIR$/ticket/templates/ticket/ticket_detail.html" />
@@ -250,6 +246,7 @@
         <option value="$PROJECT_DIR$/peopleIn/settings.py" />
         <option value="$PROJECT_DIR$/peopleIn/templates/base.html" />
         <option value="$PROJECT_DIR$/peopleIn/templates/home_base.html" />
+        <option value="$PROJECT_DIR$/peopleIn/urls.py" />
       </list>
     </option>
   </component>
@@ -506,13 +503,6 @@
     <entry file="file://$PROJECT_DIR$/ticket/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/peopleIn/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="22" column="44" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/peopleIn/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
@@ -713,13 +703,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/peopleIn/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="140" column="1" lean-forward="true" selection-start-line="140" selection-start-column="1" selection-end-line="140" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/peopleIn/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="107">
@@ -731,6 +714,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
           <caret line="77" column="57" selection-start-line="77" selection-start-column="57" selection-end-line="77" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/peopleIn/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="140" column="1" lean-forward="true" selection-start-line="140" selection-start-column="1" selection-end-line="140" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/peopleIn/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="23" column="40" lean-forward="true" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
         </state>
       </provider>
     </entry>
