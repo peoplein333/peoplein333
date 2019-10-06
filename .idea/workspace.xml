@@ -2,17 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0c4dbe09-db6f-47b6-a41d-0d54586397f1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peopleIn/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/peopleIn/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peopleIn/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/peopleIn/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peopleIn/templates/home_base.html" beforeDir="false" afterPath="$PROJECT_DIR$/peopleIn/templates/home_base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peopleIn/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/peopleIn/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peopleIn2 (7).zip" beforeDir="false" afterPath="$PROJECT_DIR$/peopleIn2 (7).zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sang/static/js/default-c8c347d00679c.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sang/static/js/default.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sang/static/js/tabs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sang/templates/sang/sang2.html" beforeDir="false" afterPath="$PROJECT_DIR$/sang/templates/sang/sang2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/import_export/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/import_export/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/import_export/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/import_export/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/import_export/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/import_export/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/import_export/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inventory/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket/migrations/0002_auto_20191006_1901.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket/templates/ticket/pay_index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket/templates/ticket/ticket_detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket/templates/ticket/ticket_index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket/views.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -93,11 +109,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/peopleIn/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="51" column="37" selection-start-line="51" selection-start-column="37" selection-end-line="51" selection-end-column="37" />
+            <state relative-caret-position="139">
+              <caret line="50" column="14" lean-forward="true" selection-start-line="50" selection-start-column="14" selection-end-line="50" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -111,10 +127,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sang/templates/sang/sang2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="370">
+            <state relative-caret-position="704">
               <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
               <folding>
                 <element signature="e#446#467#0#HTML" expanded="true" />
@@ -256,8 +272,8 @@
         <option value="$PROJECT_DIR$/ticket/templates/ticket/ticket_index.html" />
         <option value="$PROJECT_DIR$/ticket/admin.py" />
         <option value="$PROJECT_DIR$/ticket/models.py" />
-        <option value="$PROJECT_DIR$/peopleIn/settings.py" />
         <option value="$PROJECT_DIR$/sang/templates/sang/sang2.html" />
+        <option value="$PROJECT_DIR$/peopleIn/settings.py" />
       </list>
     </option>
   </component>
@@ -289,72 +305,7 @@
             <path>
               <item name="peopleIn2 (7)" type="b2602c69:ProjectViewProjectNode" />
               <item name="peopleIn2 (7)" type="462c0819:PsiDirectoryNode" />
-              <item name="franchise" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="peopleIn2 (7)" type="b2602c69:ProjectViewProjectNode" />
-              <item name="peopleIn2 (7)" type="462c0819:PsiDirectoryNode" />
-              <item name="franchise" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="peopleIn2 (7)" type="b2602c69:ProjectViewProjectNode" />
-              <item name="peopleIn2 (7)" type="462c0819:PsiDirectoryNode" />
-              <item name="franchise" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="franchise" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="peopleIn2 (7)" type="b2602c69:ProjectViewProjectNode" />
-              <item name="peopleIn2 (7)" type="462c0819:PsiDirectoryNode" />
-              <item name="notice" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="peopleIn2 (7)" type="b2602c69:ProjectViewProjectNode" />
-              <item name="peopleIn2 (7)" type="462c0819:PsiDirectoryNode" />
-              <item name="notice" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="peopleIn2 (7)" type="b2602c69:ProjectViewProjectNode" />
-              <item name="peopleIn2 (7)" type="462c0819:PsiDirectoryNode" />
-              <item name="notice" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="notice" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="peopleIn2 (7)" type="b2602c69:ProjectViewProjectNode" />
-              <item name="peopleIn2 (7)" type="462c0819:PsiDirectoryNode" />
               <item name="peopleIn" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="peopleIn2 (7)" type="b2602c69:ProjectViewProjectNode" />
-              <item name="peopleIn2 (7)" type="462c0819:PsiDirectoryNode" />
-              <item name="peopleIn" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="peopleIn2 (7)" type="b2602c69:ProjectViewProjectNode" />
-              <item name="peopleIn2 (7)" type="462c0819:PsiDirectoryNode" />
-              <item name="sang" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="peopleIn2 (7)" type="b2602c69:ProjectViewProjectNode" />
-              <item name="peopleIn2 (7)" type="462c0819:PsiDirectoryNode" />
-              <item name="sang" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="peopleIn2 (7)" type="b2602c69:ProjectViewProjectNode" />
-              <item name="peopleIn2 (7)" type="462c0819:PsiDirectoryNode" />
-              <item name="sang" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="sang" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="peopleIn2 (7)" type="b2602c69:ProjectViewProjectNode" />
-              <item name="peopleIn2 (7)" type="462c0819:PsiDirectoryNode" />
-              <item name="ticket" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -448,7 +399,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.0" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.15302491" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.6565836" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -732,13 +683,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/peopleIn/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="51" column="37" selection-start-line="51" selection-start-column="37" selection-end-line="51" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sang/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="92">
@@ -791,13 +735,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sang/templates/sang/sang2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
+        <state relative-caret-position="704">
           <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
           <folding>
             <element signature="e#446#467#0#HTML" expanded="true" />
             <element signature="e#832#904#0#HTML" expanded="true" />
             <element signature="e#3846#3907#0#HTML" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/peopleIn/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="50" column="14" lean-forward="true" selection-start-line="50" selection-start-column="14" selection-end-line="50" selection-end-column="14" />
         </state>
       </provider>
     </entry>

@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'sang',
     'django.contrib.humanize',
     'import_export',
-    'ticket',
+    # 'ticket',
     'chartit',
     'franchise.apps.FranchiseConfig',
 ]
